@@ -7,9 +7,16 @@
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function checkData(inputString) {
-	// your code goes here
+	if (typeof inputString !== 'string') {
+		throw 'Invalid Input';
+	} else {
+		if (inputString.length === 3) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
-
 /*
  * PROBLEM `concatenateArrays`: (easy)
  * Write a function that, given two arrays of integers a and b, returns an array
@@ -18,7 +25,31 @@ function checkData(inputString) {
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function concatenateArrays(a, b) {
-	// your code goes here
+	if (typeof a !== 'object' || typeof b !== 'object' 
+		|| a.length === 0 || b.length === 0) {
+		throw 'Invalid Input';
+	}
+	for (var i=0; i<a.length;  i++) {
+		if ( typeof a[i] !== 'number' || a[i]%1 !== 0) {
+			throw 'Invalid Input';
+		}
+	}
+	for (var j=0; j<b.length; j++) {
+		if (typeof b[j] !== 'number' || b[j]%1 !== 0) {
+			throw 'Invalid Input';
+		}
+	}
+	a = a.concat(b);
+	return a;
+	// /* or we can do 
+	// for (var i=0; i<b.length; i++) {
+	//  	a.push(b[i]);
+	// }
+	//  return a;
+//or 
+// Array.prototype.push.apply(a,b);
+//return a;
+	//
 }
 
 /*
@@ -31,9 +62,14 @@ function concatenateArrays(a, b) {
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function fixProperNoun(noun) {
-	// your code goes here
+	if (typeof noun !== 'string' || noun.length<1 || typeof noun == 'undefined') {
+		throw 'Invalid Input';
+	} else {
+		noun = noun.toLowerCase();
+		noun = noun.charAt(0).toUpperCase() + noun.slice(1);
+		return noun;
+	}
 }
-
 /*
  * PROBLEM `sortLetters`: (easy)
  * Write a function called `sortLetters` that returns a string that sorts all 
@@ -42,7 +78,12 @@ function fixProperNoun(noun) {
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function sortLetters(inputString) {
-	// your code goes here
+	if (typeof inputString !== 'string' || typeof inputString == 'undefined') {
+		throw 'Invalid Input';
+	} else {
+		inputString = inputString.split('').sort().join('');
+	}
+	return inputString;
 }
 
 /*
@@ -53,7 +94,13 @@ function sortLetters(inputString) {
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function absVal(integer) {
-	// your code goes here
+	if (typeof integer !== 'number' || integer.length<1 || 
+		typeof integer == 'undefined'|| integer%1 !== 0) {
+		throw 'Invalid Input';
+	} else if (integer < 0) {
+		integer = - integer; 
+	}
+	return integer;
 }
 
 /*
@@ -63,6 +110,19 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
+ function myMin (integer1, integer2) {
+ 	if (typeof integer1 !== 'number' || integer1.length<1 || 
+		typeof integer1 == 'undefined'|| integer1%1 !== 0) {
+		throw 'Invalid Input';
+	} else if (typeof integer2 !== 'number' || integer2.length<1 || 
+		typeof integer2 == 'undefined'|| integer2%1 !== 0) {
+		throw 'Invalid Input';
+	}else {
+		var numbers = [integer1, integer2];
+		numbers.sort(integer1>integer2);
+		return numbers[0]; 
+	}
+ }
 
 /*
  * PROBLEM `myMax`: (easy) - Actual Interview Question
@@ -73,6 +133,23 @@ function absVal(integer) {
  *
  * Insane mode: do this without using a for loop.
  */
+ function myMax (array) {
+    if (array instanceof Array !==true || array.length === 0 || 
+        typeof array == 'undefined' || array == null ) {
+        throw 'Invalid Input';
+    }
+    for (var i=0; i<array.length;  i++) {
+        if ( typeof array[i] !== 'number' || array[i]%1 !== 0) {
+            throw 'Invalid Input';
+        }
+    }
+    for (var i=0; i<array.length; i++){
+
+    }
+	array.sort(function(a,b) {return a-b});
+	var max = array[array.length-1];
+	return max;
+ }
 
 /*
  * PROBLEM `getMonth`: (easy)
@@ -85,12 +162,31 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function getMonth (integer) {
+	if (typeof integer !== 'number' || typeof integer == 'undefined' 
+		|| integer<1 || integer>12 || integer%1 !== 0 ) {
+		throw 'Invalid Input';
+	} else {
+		var months = [ ,'January','February', 'March', 'April', 'May', 'June', 
+		'July', 'August', 'September', 'October', 'November', 'December'];
+		var month = months[integer];
+		return month;
+	}
+}
 /*
  * PROBLEM `randomElement`: (medium)
  * Create a function called `randomElement` that takes an array of values and
  * returns one randomly selected value from that array.
  */
+ function randomElement (array) {
+ 	if (typeof array !== 'object' || array.length === 0 || typeof array == 'undefined') {
+		throw 'Invalid Input';
+	} else {
+		var random = Math.floor(Math.random()*array.length);
+		var selected = array[random];
+		return selected;
+	}
+ }
 
 /*
  * PROBLEM `studentPairs`: (medium)
@@ -98,6 +194,30 @@ function absVal(integer) {
  * student names and returns an array of randomly selected pairs of students
  * (array of arrays).
  */
+ function studentPairs (array) {
+	if (typeof array !== 'object' || array.length < 2) {
+		throw 'Invalid Input';
+	}
+	for (var i=0; i<array.length;  i++) {
+		if (typeof array[i] !== 'string') {
+			throw 'Invalid Input';
+		}
+	}
+	var newArray = [];
+	
+	while (array.length>0) {
+		var pair = [];
+		var index1 = Math.floor(Math.random()*array.length);
+		var index2 = Math.floor(Math.random()*array.length);
+		if (pair.length<2){
+			pair.push(array.splice(index1, 1)[0]);
+			pair.push(array.splice(index2, 1)[0]);
+		}
+		newArray.push(pair);
+	}
+		return newArray;
+ }
+
 
 /*
  * PROBLEM `sumSquares`: (medium)
@@ -106,7 +226,23 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function sumSquares (integerN) {
+	if (typeof integerN !== 'number' || typeof integerN == 'undefined' 
+		|| integerN%1 !== 0) {
+		throw 'Invalid Input';
+	} else {
+		var range = [];
+		for (var i=1; i<integerN+1; i++) {
+			range.push(i);
+		}
+		var total = 0;
+		for (var j = 0; j<range.length; j++) {
+			var squareNum = range[j]*range[j];
+			total = total + squareNum;
+		}
+	}
+	return total;
+}
 /* 
  * PROBLEM `findMaxDiff`: (medium)
  * Given an array of integers, write a function called `findMaxDiff` that finds
@@ -114,7 +250,29 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function findMaxDiff (array){
+	if (typeof array !== 'object' || typeof array == 'undefined' || array == null || Object.getOwnPropertyNames(array).length === 0) {
+		throw 'Invalid Input';
+	} else if (array.length<2) {
+		return 0;
+	}
+	for (var i=0; i<array.length;  i++) {
+		if ( typeof array[i] !== 'number' || array[i]%1 !== 0) {
+			throw 'Invalid Input';
+		}
+	}
+	var diffArray = [];
+	for (var i=0; i<array.length-1; i++) {
+		var diff = array[i]-array[i+1];
+		if (diff<0){
+			diff = -diff;
+		} 
+		diffArray.push(diff);
+	}
+	diffArray.sort(function(a,b){return a-b});
+	var max = diffArray[diffArray.length-1];
+	return max;
+}
 /*
  * PROBLEM `insertDashes`: (medium)
  * Write a function called `insertDashes` that transforms a given sentence into
@@ -123,7 +281,17 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function insertDashes (sentence){
+	if (typeof sentence !== 'string' || sentence == 'undefined') {
+		throw	'Invalid Input';
+	} else {
+		var newSentence = sentence.split('').join('-');
+		//could'n think of better way of replacing '- -' then with RegExpr.
+		var a = /- -/g; 
+		newSentence = newSentence.replace(a, ' ');
+		return newSentence;
+	}
+}
 /* 
  * PROBLEM `mySubstring`mySubstring: (medium)
  * Implement a function called `mySubstring` that can output the substring of 
@@ -135,7 +303,16 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function mySubstring (myString, index1, index2) {
+	if (typeof myString !== 'string' || myString == 'undefined' || myString.length<2 
+		|| typeof index1 !=='number' || typeof index2 !== 'number' || index2 == 'undefined' 
+		|| index1 == 'undefined' || index2%1 !==0) {
+		throw	'Invalid Input';
+	} else {
+		var result = myString.split('').slice(index1,index2+1).join('');
+		return result;
+	}
+}
 /*
  * PROBLEM `splitSwap`: (medium)
  * Write a function called `splitSwap` that swaps two halves of a given array.
@@ -146,7 +323,15 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function splitSwap (givenArray) {
+	if (givenArray instanceof Array !== true || givenArray == 'undefined') {
+		throw	'Invalid Input';
+	}
+	var half = Math.floor(givenArray.length/2);
+	var arraySecondHalf = givenArray.splice(half, givenArray.length-1);
+	var result = arraySecondHalf.concat(givenArray);
+	return result;
+}
 /*
  * PROBLEM `smallMultiples`: (medium)
  * For given n and k write a function called `smallMultiples` that returns the
@@ -157,6 +342,20 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
+ function smallMultiples (n, k) {
+ 	if (typeof n !== 'number' || typeof k !== 'number' || n == 'undefined' 
+ 		|| k == 'undefined' || isNaN(k) == true) {
+ 		throw 'Invalid Input';
+ 	} else {
+ 		var multiples = 0;
+ 		for (var i=2; i<n+1; i++) {
+ 			if (k*i <= n) {
+ 			multiples++;
+ 			} 
+ 		}
+ 		return multiples;
+ 	}
+ }
 
 /* 
  * PROBLEM `rot13`: (hard)
@@ -166,7 +365,30 @@ function absVal(integer) {
  * The input should only contain lower-case alphabetic characters. If the input
  * is invalid throw an 'Invalid Input' exception.
  */
-
+function rot13 (unencryptedString) {
+	if (typeof unencryptedString !== 'string' || unencryptedString == 'undefined' 
+		|| unencryptedString.length<1) {
+		throw	'Invalid Input';
+	}
+	for (var i=0; i<unencryptedString.length; i++) {
+		if (unencryptedString.charCodeAt(i) < 97 || unencryptedString.charCodeAt(i) >122) {
+			throw 'Invalid Input';
+		}
+	}
+	var charCodeArray = [];
+	for (var j=0; j<unencryptedString.length; j++) {
+		charCodeArray.push(unencryptedString.charCodeAt(j));
+	}
+	for (var k =0; k<charCodeArray.length; k++) {
+		if (charCodeArray[k]<110) {
+			charCodeArray[k] = charCodeArray[k]+13;
+		} else if (charCodeArray[k]>109) {
+			charCodeArray[k] = charCodeArray[k]-13;
+		}
+	}
+		var newString = String.fromCharCode.apply(String, charCodeArray);
+		return newString;
+}
 /*
  * PROBLEM `derot13`: (hard)
  * Create a function called `derot13` that takes a ROT-13 encrypted string and
@@ -175,7 +397,9 @@ function absVal(integer) {
  * The input should only contain lower-case alphabetic characters. If the input
  * is invalid throw an 'Invalid Input' exception.
  */
-
+function derot13 (encryptedString) {
+	return rot13(encryptedString);
+}
 /*
  * PROBLEM `rotn`: (hard)
  * Create a function called `rotn` that takes an unencrypted string and an
@@ -184,7 +408,30 @@ function absVal(integer) {
  * The input should only contain lower-case alphabetic characters. If the input
  * is invalid throw an 'Invalid Input' exception.
  */
-
+function rotn (unencryptedString, n){
+	if (typeof unencryptedString !== 'string' || unencryptedString == 'undefined' 
+		|| unencryptedString.length<1 || typeof n !=='number' || n>13 || n<1) {
+		throw	'Invalid Input';
+	}
+	for (var i=0; i<unencryptedString.length; i++) {
+		if (unencryptedString.charCodeAt(i) < 97 || unencryptedString.charCodeAt(i) >122) {
+			throw 'Invalid Input';
+		}
+	}
+	var charCodeArray = [];
+	for (var j=0; j<unencryptedString.length; j++) {
+		charCodeArray.push(unencryptedString.charCodeAt(j));
+	}
+	for (var k =0; k<charCodeArray.length; k++) {
+		if (charCodeArray[k]<110) {
+			charCodeArray[k] = charCodeArray[k]+n;
+		} else if (charCodeArray[k]>109) {
+			charCodeArray[k] = charCodeArray[k]-n;
+		}
+	}
+		var newString = String.fromCharCode.apply(String, charCodeArray);
+		return newString;
+}
 /*
  * PROBLEM `findBoth`: (hard)
  * Write a function called `findBoth` that takes two arrays of integers a and b 
@@ -193,7 +440,38 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function findBoth (a, b) {
+	if (a instanceof Array !==true || a.length === 0 || 
+        typeof a == 'undefined' || a == null || 
+        b instanceof Array !==true || b.length === 0 || 
+        typeof b == 'undefined' || b == null) {
+        throw 'Invalid Input';
+    }
+    for (var i=0; i<a.length;  i++) {
+        if (typeof a[i] !== 'number' || a[i]%1 !== 0) {
+            throw 'Invalid Input';
+        }
+    }
+     for (var j=0; j<b.length;  j++) {
+        if (typeof b[j] !== 'number' || b[j]%1 !== 0) {
+            throw 'Invalid Input';
+        }
+    }
+     a.sort(function(a,b){return a-b});
+    b.sort(function(a,b){return a-b});
+    var result =[];
+	while (a.length>0 && b.length>0) {
+		if (a[0]<b[0]) {
+			a.shift();
+		} else if (a[0]>b[0]) {
+			b.shift();
+		} else {
+			result.push(a.shift());
+			b.shift();
+		}
+	}
+    return result;
+}
 /*
  * PROBLEM `countBoth`: (hard)
  * Write a function called `countBoth` that takes two arrays of integers a and 
@@ -202,7 +480,39 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function countBoth (a,b) {
+	if (a instanceof Array !==true || a.length === 0 || 
+        typeof a == 'undefined' || a == null || 
+        b instanceof Array !==true || b.length === 0 || 
+        typeof b == 'undefined' || b == null) {
+        throw 'Invalid Input';
+    }
+    for (var i=0; i<a.length;  i++) {
+        if (typeof a[i] !== 'number' || a[i]%1 !== 0) {
+            throw 'Invalid Input';
+        }
+    }
+    for (var i=0; i<b.length;  i++) {
+        if (typeof b[i] !== 'number' || b[i]%1 !== 0) {
+            throw 'Invalid Input';
+        }
+    }
+    a.sort(function(a,b){return a-b});
+    b.sort(function(a,b){return a-b});
+    var result =[];
+	while (a.length>0 && b.length>0) {
+		if (a[0]<b[0]) {
+			a.shift();
+		} else if (a[0]>b[0]) {
+			b.shift();
+		} else {
+			result.push(a.shift());
+			b.shift();
+		}
+	}
+    var length = result.length;
+    return length;
+}
 /* 
  * PROBLEM `isDiagonalMatrix`: (hard)
  * In linear algebra, a square matrix (array of arrays) is called a diagonal 
@@ -234,7 +544,33 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function isDiagonalMatrix (matrix) {
+	if (typeof matrix !== 'object' || matrix.length<1) {
+		throw 'Invalid Input';
+	}
+	for (var i=0; i<matrix.length; i++) {
+		if (matrix[i] instanceof Array !== true) {
+			throw 'Invalid Input';
+		}
+	}
+	function checkArray (myArray, n) {
+	    var myArrayResult = true;
+	    for (var k=0; k<myArray.length; k++) {
+	    	if (k!==n && myArray[k]!==0) {
+	            myArrayResult = false;
+	       }
+	    }
+		return myArrayResult;
+		}
+	var res =[];
+	for (var j=0; j<matrix.length; j++) {
+		var innerArray = matrix[j];
+		res.push(checkArray(innerArray, j));
+	}
+	if (res.every(function(arg) {return arg==true})) {
+			return true;
+	} else { return false } 
+}
 /*
  * PROBLEM `isAnagram`: (hard) - Actual Interview Question
  * An anagram is a type of word play, the result of rearranging the letters of a
@@ -256,7 +592,22 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function isAnagram (arr1, arr2) {
+	if (typeof arr1 !== 'object' || arr1.length<2 || typeof arr2 !== 'object' 
+		|| arr2.length<2 || arr1.length !== arr2.length) {
+		throw 'Invalid Input';
+	}
+	var result = [];
+	for (var i=0; i<arr1.length, i<arr2.length; i++) {
+		arr1[i] = arr1[i].split('').sort().join('');
+		arr2[i] = arr2[i].split('').sort().join('');
+		if (arr1[i] !== arr2[i]) {
+			result.push(false);
+		}
+		else { result.push(true); } 
+	}
+	return result;
+}
 /*
  * PROBLEM `validateParentheses`: (hard) - Actual Interview Question
  * Write a function called `validateParentheses` that takes a string of
@@ -279,7 +630,20 @@ function absVal(integer) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-
+function validateParentheses (stringOfParentheses) {
+	if (typeof stringOfParentheses !== 'string' || stringOfParentheses == 'undefined') {
+		throw 'Invalid Input';
+	}
+	for (var i=0; i<stringOfParentheses.length; i++) {
+		if (stringOfParentheses.charCodeAt(i) >96 && stringOfParentheses.charCodeAt(i) <123) {
+			throw 'Invalid Input';
+		}
+	}
+	var parentheses = '[]{}()';
+	var myArray = [];
+	// for (var j=0; j<stringOfParentheses.length; j++) {
+	// 	if 
+}
 /* 
  * PROBLEM `flattenArray`: (hard) - Actual Interview Question
  * Write a function called flattenArray that takes an array of any type of
@@ -293,6 +657,20 @@ function absVal(integer) {
  *
  * Insane mode: do this without recursion.
  */
-
+function flattenArray (myArray) {
+	if (myArray instanceof Array !==true || myArray.length === 0 || 
+        typeof myArray == 'undefined' || myArray == null) {
+        throw 'Invalid Input';
+    }
+	// for (var i=0; i<myArray.length; i++) {
+		// if (myArray[i] instanceof Object == true) {
+		// 	var objectElement = myArray.splice(i,1);
+		// 	console.log(objectElement);
+		// // } else {
+			// var flat = [].concat.apply([], myArray);
+			// return flat;
+	// 	}
+	// }
+}
 
 

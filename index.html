@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var testArray = ['John', 'Allen', 'Keith', 'Logan', 'Ramona', 'Sydney', 'Kristen', 'Rob', 'Joshua', 'David', 'Alex', 'Maria', 'Zachary', 'me'];
+	function studentPairs (array) {
+	if (typeof array !== 'object' || array.length < 2) {
+		throw 'Invalid Input';
+	}
+	for (var i=0; i<array.length;  i++) {
+		if (typeof array[i] !== 'string') {
+			throw 'Invalid Input';
+		}
+	}
+	var newArray = [];
+	
+	while (array.length>0) {
+		var pair = [];
+		var index1 = Math.floor(Math.random()*array.length);
+		var index2 = Math.floor(Math.random()*array.length);
+		if (pair.length<2){
+			pair.push(array.splice(index1, 1)[0]);
+			pair.push(array.splice(index2, 1)[0]);
+		}
+		newArray.push(pair);
+	}
+		return newArray;
+ }
+ studentPairs(testArray);
+</script>
+</body>
+</html>
